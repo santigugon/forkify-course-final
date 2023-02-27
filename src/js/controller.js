@@ -553,7 +553,7 @@ addRecipeButton.addEventListener('click', function () {
 
   uploadRecipeBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    recipe = createrecipe();
+    let recipe = createrecipe();
     console.log('YA');
     addRecipeModal.classList.add('hidden');
 
