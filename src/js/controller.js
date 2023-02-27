@@ -8,7 +8,7 @@ import {
 } from './addABookmark';
 import { numberToFraction } from './helpers';
 import { renderIngredients, changeServings } from './ingredients';
-import { createRecipe } from './UploadRecipe';
+// import { createRecipe } from './UploadRecipe';
 import { renderMyRecipes, getMyRecipes, resetMyRecipes } from './myRecipes';
 
 const searchForm = document.querySelector('.search');
