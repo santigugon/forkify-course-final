@@ -414,8 +414,42 @@ const searchRecipeDetails = async function (id) {
     );
     const data = await resp.json();
     let { recipe } = data.data;
-    return recipe;
+    const translatedRecipe = await translateRecipe(recipe);
+
+    return translatedRecipe;
   } catch (error) {}
+};
+
+const translateRecipe = async function (recipe) {
+  try {
+    const apiKey = 'b0952056-d8cf-a842-0f40-ef8855ea610c:fx'; // Replace with your actual DeepL API key
+    const targetLanguage = 'spanish'; // Replace with your target language code
+
+    // Extract text content from the recipe (modify based on your actual JSON structure)
+    const textToTranslate = JSON.stringify(recipe);
+
+    // Send a request to DeepL API for translation
+    const deepLResp = await fetch('https://api-free.deepl.com/v2/translate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: textToTranslate,
+        target_lang: targetLanguage,
+        auth_key: apiKey,
+      }),
+    });
+
+    const translatedText = (await deepLResp.json()).translations[0].text;
+
+    // Parse the translated JSON
+    const translatedRecipe = JSON.parse(translatedText);
+
+    return translatedRecipe;
+  } catch (error) {
+    console.error('Error:', error);
+  }
 };
 
 const recipeClick = function (e, search) {
@@ -459,8 +493,10 @@ const searchFormEvent = function () {
     showRecipe(search);
   });
 };
+
 // https://forkify-api.herokuapp.com/v2
 searchFormEvent();
+showRecipe('christmas');
 
 bookMarksButton.addEventListener('mouseover', function (e) {
   e.preventDefault();
