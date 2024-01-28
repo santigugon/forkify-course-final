@@ -99,9 +99,16 @@ const showRecipe = async function (food) {
     food = food.toLowerCase();
     startData();
 
-    const res = await fetch(`
-      https://forkify-api.herokuapp.com/api/v2/recipes?search=${food}&key=84e2dec0-4c04-4c6b-833c-0f4328611646`);
-    // console.log(res);
+    const res = await fetch('http://localhost:3000/translateRecipe/' + food, {
+      mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+
+      // You can include a request body if needed
+      // body: JSON.stringify({ /* your data here */ }),
+    });
+    console.log('Me levante');
 
     if (!res.ok)
       throw new Error('Request rejected, too many requests, try again later');
